@@ -3,8 +3,8 @@
  * Thailand Time (UTC+7) via NTP
  *
  * OLED I2C Wiring:
- *   SDA -> GPIO 5
- *   SCL -> GPIO 6
+ *   SDA -> GPIO 2
+ *   SCL -> GPIO 3
  *
  * Uses FreeRTOS tasks:
  *   - taskNTP:     syncs time from NTP server periodically
@@ -80,7 +80,7 @@ void setup() {
   Serial.println("\n[BOOT] ESP32-C3 OLED Clock Starting...");
 
   // Initialize I2C on GPIO 5 (SDA) and GPIO 6 (SCL)
-  Wire.begin(5, 6);
+  Wire.begin(2, 3);
 
   // Initialize OLED
   u8g2.begin();
