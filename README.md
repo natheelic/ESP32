@@ -28,6 +28,26 @@
 
 ## 🛠 วิธีใช้งาน
 
+### 1) เลือกโปรเจกต์
+
+แต่ละโฟลเดอร์คือโปรเจกต์แยกกัน ใช้ได้ทั้ง Arduino IDE หรือ PlatformIO
+
+### 2) ตั้งค่าใน `platformio.ini` (ถ้าใช้ PlatformIO)
+
+- เลือก `board` ให้ตรงรุ่น (C3 หรือ C5)
+- เลือก `framework = arduino`
+- ตั้งค่า `monitor_speed` ให้ตรงกับ `Serial.begin(...)`
+- ถ้ามี OLED ให้เปิดไลบรารี U8g2 ตามเดิมในไฟล์
+
+### 3) แก้การกำหนดขา I2C (OLED)
+
+ค่าเริ่มต้นที่ใช้ในตัวอย่าง:
+
+- ESP32-C3 Super Mini: SDA = 5, SCL = 6
+- ESP32-C5: SDA = 2, SCL = 3
+
+หากเปลี่ยนบอร์ดหรือสาย ให้แก้ค่าใน `main.cpp`
+
 ### ต้องติดตั้ง Library
 
 | Library | ผู้พัฒนา | ใช้ใน |
@@ -37,6 +57,8 @@
 | [ESP32Ping](https://github.com/marian-craciunescu/ESP32Ping) | marian-craciunescu | โปรเจกต์ Ping |
 
 ติดตั้งผ่าน **Arduino IDE → Sketch → Include Library → Manage Libraries...**
+
+ถ้าใช้ PlatformIO ให้เพิ่มใน `lib_deps` ของ `platformio.ini`
 
 ### การเชื่อมต่อ WiFi ผ่าน WiFiManager
 
@@ -66,6 +88,28 @@ WiFi.setTxPower(WIFI_POWER_8_5dBm);
 ```
 
 **สาเหตุ:** เสาอากาศ PCB ขนาดเล็กของ ESP32-C3 Super Mini รับ TX power เต็ม (20dBm) ไม่ไหว ทำให้สัญญาณบิดเบี้ยว → เชื่อมต่อไม่ได้ ต้องลดเหลือ 8.5dBm
+
+## ⚙️ การตั้งค่าที่พบบ่อย
+
+### เปลี่ยนชื่อ Access Point ของ WiFiManager
+
+ค้นหาใน `main.cpp` ของแต่ละโปรเจกต์ แล้วแก้ชื่อใน `autoConnect("...")`
+
+### ตั้งค่าเวลา (Online Clock)
+
+โปรเจกต์นาฬิกาใช้อินเทอร์เน็ตเวลา (NTP) อยู่แล้ว หากต้องการปรับโซนเวลาให้แก้ค่า offset ที่กำหนดในโค้ด
+
+### เปลี่ยนขา/ความสว่าง OLED
+
+แก้พารามิเตอร์ในส่วนเริ่มต้นจอของ U8g2 ตามรุ่นและขาที่ต้องการ
+
+## ✅ เช็กลิสต์ก่อนอัปโหลด
+
+- เลือกบอร์ดให้ตรงรุ่น (C3/C5)
+- เลือกพอร์ตถูกต้อง
+- ตั้ง `monitor_speed` ให้ตรงกับ `Serial.begin(...)`
+- ติดตั้งไลบรารีครบ
+- ถ้าเป็น ESP32-C3 ให้ใช้ WiFi Fix ตามด้านบน
 
 ## 📝 License
 
