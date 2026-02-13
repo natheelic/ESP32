@@ -1,5 +1,5 @@
 /*
- * ESP32-C3 Super Mini — OLED 128×64 Online Clock
+ * ESP32-C5 Super Mini — OLED 128×64 Online Clock
  * Thailand Time (UTC+7) via NTP
  * WiFi Configuration via WiFiManager (Captive Portal)
  *
@@ -84,14 +84,14 @@ void drawPortalScreen();
 void setup() {
   Serial.begin(115200);
 
-  // Wait for USB CDC to be ready (ESP32-C3 uses native USB)
+  // Wait for USB CDC to be ready (ESP32-C5 uses native USB)
   unsigned long startWait = millis();
   while (!Serial && (millis() - startWait < 3000)) {
     delay(10);
   }
   delay(500);
 
-  Serial.println("\n[BOOT] ESP32-C3 OLED Clock Starting...");
+  Serial.println("\n[BOOT] ESP32-C5 OLED Clock Starting...");
   Serial.println("[BOOT] Using WiFiManager for WiFi configuration");
 
   // Initialize I2C on GPIO 2 (SDA) and GPIO 3 (SCL)
@@ -132,7 +132,7 @@ void loop() {
 void taskWiFi(void *param) {
   WiFiManager wm;
 
-  // ★ Fix for ESP32-C3 Super Mini: reduce TX power
+  // ★ Fix for ESP32-C5 Super Mini: reduce TX power
   // The small PCB antenna can't handle full power (20dBm),
   // causing signal distortion and connection failures.
   WiFi.setTxPower(WIFI_POWER_8_5dBm);
